@@ -7,4 +7,14 @@ module.exports = {
 
     return res.json(data);
   },
+
+  async create(req, res) {
+    const { title, description } = req.body;
+    const projectsCreated = await Projects.create({
+      title,
+      description
+    });
+
+    return res.json(projectsCreated)
+  }
 }
