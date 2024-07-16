@@ -7,4 +7,9 @@ const userSchema = Joi.object({
   password: Joi.string().min(5).required(),
 });
 
-module.exports = { userSchema };
+const projectSchema = Joi.object({
+  title: Joi.string().min(3).required(),
+  description: Joi.string().min(10).required(),
+})
+
+module.exports = { userSchema, projectSchema };

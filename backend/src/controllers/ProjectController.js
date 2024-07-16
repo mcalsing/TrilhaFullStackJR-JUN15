@@ -10,11 +10,7 @@ module.exports = {
 
   async create(req, res) {
     const { title, description } = req.body;
-
-    if (!title || !description) {
-      return res.status(400).json({ error: "Necessário um título/descrição"})
-    }
-
+    
     const projectCreated = await Project.create({ title, description });
 
     return res.json(projectCreated)
@@ -26,10 +22,6 @@ module.exports = {
 
     if (id.length !== 24) {
       return res.status(401).json({ error: "ID deve ter 24 characteres"})
-    }
-
-    if (!title || !description) {
-      return res.status(400).json({ error: "Necessário um título/descrição"})
     }
 
     const updadeProject = await Project.findByIdAndUpdate(id, { title, description });
