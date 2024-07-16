@@ -1,11 +1,14 @@
 const express = require('express');
 const routes = express.Router();
 
-const ProjectsController = require('./controllers/ProjectsController');
+const ProjectController = require('./controllers/ProjectController');
+const UserController = require('./controllers/UserController')
 
-routes.get('/api/projects', ProjectsController.findAll);
-routes.post('/api/projects', ProjectsController.create);
-routes.put('/api/projects/:id', ProjectsController.updade);
-routes.delete('/api/projects/:id', ProjectsController.delete);
+routes.get('/api/projects', ProjectController.getAll);
+routes.post('/api/projects', ProjectController.create);
+routes.put('/api/projects/:id', ProjectController.updade);
+routes.delete('/api/projects/:id', ProjectController.delete);
+
+routes.post('/user', UserController.create);
 
 module.exports = routes;

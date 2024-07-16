@@ -2,7 +2,7 @@ const express = require("express");
 const routes = require('./routes');
 
 // DB Connection
-const conn = require('./config/dbConfig');
+const conn = require('./database/dbConfig');
 conn();
 
 const app = express();

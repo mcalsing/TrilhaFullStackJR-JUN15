@@ -1,9 +1,9 @@
-const Projects = require('../models/ProjectsModel');
+const Project = require('../models/ProjectModel');
 
 module.exports = {
 
-  async findAll(_req, res) {
-    const data = await Projects.find();
+  async getAll(_req, res) {
+    const data = await Project.find();
 
     return res.json(data);
   },
@@ -15,7 +15,7 @@ module.exports = {
       return res.status(400).json({ error: "Necessário um título/descrição"})
     }
 
-    const projectCreated = await Projects.create({ title, description });
+    const projectCreated = await Project.create({ title, description });
 
     return res.json(projectCreated)
   },
@@ -32,7 +32,7 @@ module.exports = {
       return res.status(400).json({ error: "Necessário um título/descrição"})
     }
 
-    const updadeProject = await Projects.findByIdAndUpdate(id, { title, description });
+    const updadeProject = await Project.findByIdAndUpdate(id, { title, description });
 
     if (updadeProject) {
       return res.json(updadeProject);
@@ -47,7 +47,7 @@ module.exports = {
       return res.status(401).json({ error: "ID deve ter 24 characters"})
     }
 
-    const deleteProject = await Projects.findByIdAndDelete(id);
+    const deleteProject = await Project.findByIdAndDelete(id);
 
     if (deleteProject) {
       return res.json(deleteProject);
