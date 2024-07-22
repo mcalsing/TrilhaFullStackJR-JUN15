@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import {FaUser, FaLock} from "react-icons/fa"
+import {FaAt, FaLock} from "react-icons/fa"
 import { useState } from "react";
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <main className="flex flex-col">
       <div className="h-[500px] lg:mx-16 xl:mx-28 2xl:mx-48 grid grid-cols-2">
-        <div className="bg-[#ef4444] rounded-md relative">
+        <div className="bg-[#ef4444] rounded-lg relative">
           {/* <Image className="relative invert" src="/black_ink_circle.png" alt="logo" width={500} height={24}></Image> */}
           <Image className="absolute top-14 ml-32 " src="/menina_fundo.png" alt="log" width={300} height={24}></Image>
           <h1 className="absolute xl:right-8 2xl:right-14 xl:top-6 2xl:top-10 top-1 text-black lg:text-lg xl:text-2xl 2xl:text-3xl font-bold">Código Certo</h1>
@@ -34,7 +34,7 @@ export default function Home() {
                 className="py-2 px-8 rounded-3xl"
                 onChange={(e) => setEmail(e.target.value)}
                 />
-                <FaUser className="absolute right-2 top-3"/>
+                <FaAt className="absolute right-2 top-3"/>
             </div>
             <div className="pb-2 flex relative">
               <input 
@@ -53,14 +53,13 @@ export default function Home() {
               <button className="bg-[#ef4444] text-black text-2xl w-full h-10 rounded-md">Entrar</button>
             </div>
             <div className="text-white mt-5 flex justify-center">
-            
-              <a className="text-base" href="#">Criar Conta</a>
+              <a className="text-base" href="/createAccount">Criar Conta</a>
             </div>
           </form>
         </div>
       </div>
       <footer className="absolute bottom-0 bg-red-500 text-white w-full py-2">
-        <span class="block text-sm text-white sm:text-center">© 2024 <a href="https://www.linkedin.com/in/marcelocalsing/" target="_blank">Marcelo Calsing</a>. All Rights Reserved.</span>
+        <span className="block text-sm text-white sm:text-center">© 2024 <a href="https://www.linkedin.com/in/marcelocalsing/" target="_blank">Marcelo Calsing</a>. All Rights Reserved.</span>
       </footer>
     </main>
   );

@@ -18,14 +18,8 @@ export default function RootLayout({ children }) {
                 <a href="/" className="text-white mr-5 hover:text-[#ef4444]">
                   Home
                 </a>
-                <a href="/" className="text-white mr-5 hover:text-[#ef4444]">
-                  Sobre
-                </a>
-                <a href="/about" className="text-white mr-5 hover:text-[#ef4444]">
-                  Projetos
-                </a>
-                <a href="/login" target="_blank" className="text-white hover:text-[#ef4444]">
-                  Login
+                <a href="/projects" className="text-white mr-5 hover:text-[#ef4444]">
+                  Meus Projetos
                 </a>
               </div>
             </nav>
