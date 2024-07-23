@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <header>
-            <nav className="flex justify-evenly items-center p-5">
+            <nav className="flex justify-evenly items-center pt-5 pb-8">
               <div className="sm:text-lg md:text-xl lg:text-2xl xl:text-1xl text-sm">
                 <a href="/" className="text-white mr-5 hover:text-[#ef4444]">
                   Home

@@ -27,28 +27,46 @@ export default function MyProjects() {
     setProjects(prevProjects => prevProjects.filter(project => project._id !== id));
   }
 
+  const handleUpdate = (id, event) => {
+    console.log(id)
+    console.log(event)
+
+    const updatedProject = {
+      _id: id,
+      title: event.target.elements.title.value,
+      description: event.target.elements.description.value,
+    };
+    console.log(updatedProject.title)
+
+    // await axios.put(`http://localhost:3334/api/projects/${id}`, updatedProject);
+    
+    setProjects(prevProjects => prevProjects.map(project => project._id === id ? updatedProject : project));
+  }
+
   return (
     <main className='flex'>
-      <div className=''>
-        <form className='w-[400px] border-2 border-red-500 mx-20 p-5 rounded-md flex flex-col items-center gap-5'>
+      <div>
+        <form className='w-[400px] border-2 border-[#ef4444] mx-20 p-5 rounded-md flex flex-col items-center gap-5'>
           <h1 className='text-2xl text-white'>Cadastre um projeto</h1>
           <input
+            name='title'
             type='text'
             placeholder='Títudo do projeto'
             className='py-1 px-5 rounded-3xl'
           />
           <input
+            name='description'
             type='text'
             placeholder='Descrição'
             className='py-1 px-5 rounded-3xl'
           />
-          <button className='bg-red-500 w-full py-2 mt-4 rounded-md'>Enviar</button>
+          <button className='bg-[#ef4444] w-full py-2 mt-4 rounded-md'>Enviar</button>
         </form>
       </div>
       <div className='text-white flex justify-center w-full mr-20'>
         {isLoading ? (
-          <div className="text-center text-white font-medium">
-            Carregando projetos...
+          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-zinc-700 bg-opacity-70 backdrop-filter backdrop-blur-sm z-50 text-3xl">
+            Buscando projetos...
           </div>
         ) : (
           <div>
@@ -65,7 +83,12 @@ export default function MyProjects() {
                     </div>
                     <p>Descrição: {item.description}</p>
                     <div className=''>
-                      <button className='bg-red-500 text-white w-full py-2 mt-4 rounded-md'>Editar Projeto</button>
+                      <button 
+                        className='bg-[#ef4444] text-white w-full py-2 mt-4 rounded-md'
+                        onClick={() => handleUpdate(item._id)}
+                      >
+                        Editar Projeto
+                      </button>
                     </div>
                   </div>
                 ))}
