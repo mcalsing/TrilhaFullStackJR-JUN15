@@ -18,12 +18,15 @@ export default function RootLayout({ children }) {
                 <a href="/" className="text-white mr-5 hover:text-[#ef4444]">
                   Home
                 </a>
-                <a href="/projects" className="text-white mr-5 hover:text-[#ef4444]">
+                <a href="/myProjects" className="text-white mr-5 hover:text-[#ef4444]">
                   Meus Projetos
                 </a>
               </div>
             </nav>
           </header>
+          <footer className="absolute bottom-0 bg-red-500 text-white w-full py-2">
+            <span className="block text-sm text-white sm:text-center">© 2024 <a href="https://www.linkedin.com/in/marcelocalsing/" target="_blank">Marcelo Calsing</a>. All Rights Reserved.</span>
+          </footer>
         {children}</body>
     </html>
   );

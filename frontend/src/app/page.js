@@ -49,18 +49,15 @@ export default function Home() {
               <a className="absolute right-0 text-base" href="#">Esqueceu a senha?</a>
             </div> 
             <div className="mt-11 flex flex-col items-center">
-              <div className="border-b border-red-500 mb-11 w-2/3"></div>
+              <div className="border-b border-[#ef4444] mb-11 w-2/3"></div>
               <button className="bg-[#ef4444] text-black text-2xl w-full h-10 rounded-md">Entrar</button>
             </div>
             <div className="text-white mt-5 flex justify-center">
-              <a className="text-base" href="/createAccount">Criar Conta</a>
+              <a className="text-base" href="/createaAccount">Criar Conta</a>
             </div>
           </form>
         </div>
       </div>
-      <footer className="absolute bottom-0 bg-red-500 text-white w-full py-2">
-        <span className="block text-sm text-white sm:text-center">© 2024 <a href="https://www.linkedin.com/in/marcelocalsing/" target="_blank">Marcelo Calsing</a>. All Rights Reserved.</span>
-      </footer>
     </main>
   );
 }
