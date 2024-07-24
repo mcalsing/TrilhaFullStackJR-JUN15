@@ -1,17 +1,19 @@
 "use client";
 
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdDelete } from "react-icons/md";
 
 
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [projectUpdate, setProjectUpdate] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
   const getProjects = async () => {
     const response = await axios.get('http://localhost:3334/api/projects');
-    setProjects(response.data);
+    setProjects(response.data)
   };
 
   useEffect(() => {
@@ -27,21 +29,46 @@ export default function MyProjects() {
     setProjects(prevProjects => prevProjects.filter(project => project._id !== id));
   }
 
-  const handleUpdate = (id, event) => {
-    console.log(id)
-    console.log(event)
+  const handleUpdate = async (id, title, description) => {
+    setIsEditing(true);
 
-    const updatedProject = {
-      _id: id,
-      title: event.target.elements.title.value,
-      description: event.target.elements.description.value,
-    };
-    console.log(updatedProject.title)
+    //console.log(projectUpdate.id);
+    //console.log(projectUpdate.title);
+    //console.log(projectUpdate.description);
 
-    // await axios.put(`http://localhost:3334/api/projects/${id}`, updatedProject);
+    setProjectUpdate({
+      id: id,
+      title: title,
+      description: description
+    });
     
-    setProjects(prevProjects => prevProjects.map(project => project._id === id ? updatedProject : project));
+    
+    // await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
+    
+    // setProjects(prevProjects => prevProjects.map(project => project.id === id ? projectUpdate : project));
   }
+
+  const sendUpdate = async (event) => {
+    event.preventDefault();
+  
+    // const { id, title, description } = projectUpdate;
+  
+   /*  console.log(id, title, description);
+    try {
+      const response = await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
+  
+      if (response.status === 200) {
+        // Atualizar o estado local `projects` com os novos dados (se necessário)
+        console.log('Projeto atualizado com sucesso!');
+      } else {
+        console.error('Erro ao atualizar o projeto:', response.data);
+      }
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+    } finally {
+      setIsEditing(false);
+    } */
+  };
 
   return (
     <main className='flex'>
@@ -53,14 +80,29 @@ export default function MyProjects() {
             type='text'
             placeholder='Títudo do projeto'
             className='py-1 px-5 rounded-3xl'
+            value={projectUpdate.title}
+            onChange={(e) => setProjectUpdate(e.target.value)}
           />
-          <input
+          <textarea
             name='description'
             type='text'
+            cols='23'
+            rows='8'
             placeholder='Descrição'
             className='py-1 px-5 rounded-3xl'
+            value={projectUpdate.description}
+            onChange={(e) => setProjectUpdate(e.target.value)}
           />
-          <button className='bg-[#ef4444] w-full py-2 mt-4 rounded-md'>Enviar</button>
+          {isEditing ? (
+            <button 
+              className='bg-[#ef4444] w-full py-2 mt-4 rounded-md'
+              onClick={() => sendUpdate()}
+            >
+              Editar
+            </button>
+          ) : (
+            <button className='bg-[#ef4444] w-full py-2 mt-4 rounded-md'>Cadastrar</button>
+          )}
         </form>
       </div>
       <div className='text-white flex justify-center w-full mr-20'>
@@ -85,7 +127,7 @@ export default function MyProjects() {
                     <div className=''>
                       <button 
                         className='bg-[#ef4444] text-white w-full py-2 mt-4 rounded-md'
-                        onClick={() => handleUpdate(item._id)}
+                        onClick={() => handleUpdate(item._id, item.title, item.description)}
                       >
                         Editar Projeto
                       </button>
