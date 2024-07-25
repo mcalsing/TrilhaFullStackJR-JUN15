@@ -32,42 +32,19 @@ export default function MyProjects() {
   const handleUpdate = async (id, title, description) => {
     setIsEditing(true);
 
-    //console.log(projectUpdate.id);
-    //console.log(projectUpdate.title);
-    //console.log(projectUpdate.description);
-
     setProjectUpdate({
       id: id,
       title: title,
       description: description
     });
-    
-    
-    // await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
-    
-    // setProjects(prevProjects => prevProjects.map(project => project.id === id ? projectUpdate : project));
   }
 
-  const sendUpdate = async (event) => {
-    event.preventDefault();
+  const sendUpdate = async () => {
+    const { id, title, description } = projectUpdate;
+       
+    await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
   
-    // const { id, title, description } = projectUpdate;
-  
-   /*  console.log(id, title, description);
-    try {
-      const response = await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
-  
-      if (response.status === 200) {
-        // Atualizar o estado local `projects` com os novos dados (se necessário)
-        console.log('Projeto atualizado com sucesso!');
-      } else {
-        console.error('Erro ao atualizar o projeto:', response.data);
-      }
-    } catch (error) {
-      console.error('Erro na requisição:', error);
-    } finally {
-      setIsEditing(false);
-    } */
+    setIsEditing(false);
   };
 
   return (
@@ -81,7 +58,7 @@ export default function MyProjects() {
             placeholder='Títudo do projeto'
             className='py-1 px-5 rounded-3xl'
             value={projectUpdate.title}
-            onChange={(e) => setProjectUpdate(e.target.value)}
+            onChange={(e) => setProjectUpdate({ ...projectUpdate, title: e.target.value })}
           />
           <textarea
             name='description'
@@ -91,12 +68,12 @@ export default function MyProjects() {
             placeholder='Descrição'
             className='py-1 px-5 rounded-3xl'
             value={projectUpdate.description}
-            onChange={(e) => setProjectUpdate(e.target.value)}
+            onChange={(e) => setProjectUpdate({ ...projectUpdate, description: e.target.value })}
           />
           {isEditing ? (
             <button 
               className='bg-[#ef4444] w-full py-2 mt-4 rounded-md'
-              onClick={() => sendUpdate()}
+              onClick={sendUpdate}
             >
               Editar
             </button>
