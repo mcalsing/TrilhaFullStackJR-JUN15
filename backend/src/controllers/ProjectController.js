@@ -24,7 +24,7 @@ module.exports = {
       return res.status(401).json({ error: "ID deve ter 24 characteres"})
     }
 
-    const updadeProject = await Project.findByIdAndUpdate(id, { title, description });
+    const updadeProject = await Project.findByIdAndUpdate(id, { title, description }, { new: true });
 
     if (updadeProject) {
       return res.json(updadeProject);

@@ -31,7 +31,7 @@ export default function MyProjects() {
 
   const handleUpdate = async (id, title, description) => {
     setIsEditing(true);
-    console.log(id)
+
     setProjectUpdate({
       id: id,
       title: title,
@@ -44,11 +44,12 @@ export default function MyProjects() {
     const { id, title, description } = projectUpdate;
        
     const response = await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
-    console.log(response.data);
-    const excludeSelected = projects.filter(project => project._id !== id)
-    const newProjects = [...excludeSelected, response.data];
+    const copyOfProjects = [...projects]
+    const index = copyOfProjects.findIndex(project => project._id === id);
 
-    setProjects(newProjects);
+    copyOfProjects[index] = response.data;
+
+    setProjects(copyOfProjects);
     setProjectUpdate({
       title: '',
       description: ''
