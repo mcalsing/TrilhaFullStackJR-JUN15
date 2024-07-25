@@ -26,12 +26,12 @@ export default function MyProjects() {
 
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:3334/api/projects/${id}`);
-    setProjects(prevProjects => prevProjects.filter(project => project._id !== id));
+    setProjects(projects.filter(project => project._id !== id));
   }
 
   const handleUpdate = async (id, title, description) => {
     setIsEditing(true);
-
+    console.log(id)
     setProjectUpdate({
       id: id,
       title: title,
@@ -39,11 +39,20 @@ export default function MyProjects() {
     });
   }
 
-  const sendUpdate = async () => {
+  const sendUpdate = async (event) => {
+    event.preventDefault();
     const { id, title, description } = projectUpdate;
        
-    await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
-  
+    const response = await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
+    console.log(response.data);
+    const excludeSelected = projects.filter(project => project._id !== id)
+    const newProjects = [...excludeSelected, response.data];
+
+    setProjects(newProjects);
+    setProjectUpdate({
+      title: '',
+      description: ''
+    });
     setIsEditing(false);
   };
 
@@ -51,7 +60,11 @@ export default function MyProjects() {
     <main className='flex'>
       <div>
         <form className='w-[400px] border-2 border-[#ef4444] mx-20 p-5 rounded-md flex flex-col items-center gap-5'>
-          <h1 className='text-2xl text-white'>Cadastre um projeto</h1>
+          {isEditing ? (
+            <h1 className='text-2xl text-white'>Editar Projeto</h1>
+          ) : (
+            <h1 className='text-2xl text-white'>Cadastrar Projeto</h1>
+          )}
           <input
             name='title'
             type='text'
@@ -100,7 +113,7 @@ export default function MyProjects() {
                         onClick={() => handleDelete(item._id)}
                       />
                     </div>
-                    <p>Descrição: {item.description}</p>
+                    <p><strong>Descrição:</strong> {item.description}</p>
                     <div className=''>
                       <button 
                         className='bg-[#ef4444] text-white w-full py-2 mt-4 rounded-md'

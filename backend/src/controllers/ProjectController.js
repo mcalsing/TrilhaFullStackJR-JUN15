@@ -19,14 +19,12 @@ module.exports = {
   async updade(req, res) {
     const { title, description } = req.body;
     const { id } = req.params;
-    console.log('entrou no update')
-    console.log({title, description});
 
     if (id.length !== 24) {
       return res.status(401).json({ error: "ID deve ter 24 characteres"})
     }
 
-    const updadeProject = await Project.findByIdAndUpdate(id, { title, description } );
+    const updadeProject = await Project.findByIdAndUpdate(id, { title, description });
 
     if (updadeProject) {
       return res.json(updadeProject);
