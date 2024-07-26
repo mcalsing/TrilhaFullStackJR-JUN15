@@ -57,6 +57,27 @@ export default function MyProjects() {
     setIsEditing(false);
   };
 
+  const cancelUpdate = (event) => {
+    event.preventDefault();
+    setIsEditing(false);
+    setProjectUpdate({
+      title: '',
+      description: ''
+    });
+  };
+
+  const createProject = async (event) => {
+    event.preventDefault();
+    const { title, description } = projectUpdate;
+
+    const response = await axios.post('http://localhost:3334/api/projects', { title, description });
+    setProjects([...projects, response.data]);
+    setProjectUpdate({
+      title: '',
+      description: ''
+    });
+  };
+
   return (
     <main className='flex'>
       <div>
@@ -85,14 +106,12 @@ export default function MyProjects() {
             onChange={(e) => setProjectUpdate({ ...projectUpdate, description: e.target.value })}
           />
           {isEditing ? (
-            <button 
-              className='bg-[#ef4444] w-full py-2 mt-4 rounded-md'
-              onClick={sendUpdate}
-            >
-              Editar
-            </button>
+            <div className='grid grid-flow-col justify-stretch gap-5 w-full h-10 mt-4'>
+              <button className='bg-[#ef4444] rounded-md px-16' onClick={sendUpdate}>Editar</button>
+              <button className='bg-[#ef4444] rounded-md' onClick={cancelUpdate}>Cancelar</button>
+            </div>
           ) : (
-            <button className='bg-[#ef4444] w-full py-2 mt-4 rounded-md'>Cadastrar</button>
+            <button className='bg-[#ef4444] w-full py-2 mt-4 rounded-md' onClick={createProject}>Cadastrar</button>
           )}
         </form>
       </div>
