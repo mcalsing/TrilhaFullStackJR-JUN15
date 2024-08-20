@@ -10,6 +10,7 @@ export default function MyProjects() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentProject, setCurrentProject] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const getProjects = async () => {
     const response = await axios.get('http://localhost:3334/api/projects');
@@ -30,7 +31,6 @@ export default function MyProjects() {
   }
 
   const handleUpdate = async (id, title, description) => {
-    console.log('entrei no editar')
     setIsEditing(true);
 
     setCurrentProject({
@@ -43,19 +43,27 @@ export default function MyProjects() {
   const sendUpdate = async (event) => {
     event.preventDefault();
     const { id, title, description } = currentProject;
-       
-    const response = await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
-    const copyOfProjects = [...projects]
-    const index = copyOfProjects.findIndex(project => project._id === id);
+    
+    try {
+      const response = await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
+      const copyOfProjects = [...projects]
+      const index = copyOfProjects.findIndex(project => project._id === id);
+  
+      copyOfProjects[index] = response.data;
+  
+      setProjects(copyOfProjects);
+      setCurrentProject({
+        title: '',
+        description: ''
+      });
+      setIsEditing(false);
 
-    copyOfProjects[index] = response.data;
-
-    setProjects(copyOfProjects);
-    setCurrentProject({
-      title: '',
-      description: ''
-    });
-    setIsEditing(false);
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000);
+    }
   };
 
   const cancelUpdate = (event) => {
@@ -70,16 +78,22 @@ export default function MyProjects() {
 
   const createProject = async (event) => {
     event.preventDefault();
-    console.log('entrei no create')
-    console.log(currentProject)
     const { title, description } = currentProject;
 
-    const response = await axios.post('http://localhost:3334/api/projects', { title, description });
-    setProjects([...projects, response.data]);
-    setCurrentProject({
-      title: '',
-      description: ''
-    });
+    try {
+      const response = await axios.post('http://localhost:3334/api/projects', { title, description });
+      setProjects([...projects, response.data]);
+      setCurrentProject({
+        title: '',
+        description: ''
+      });
+      
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000);
+    }
   };
 
   return (
@@ -117,6 +131,7 @@ export default function MyProjects() {
           ) : (
             <button className='bg-[#ef4444] w-full py-2 mt-4 rounded-md' onClick={createProject}>Cadastrar</button>
           )}
+          {errorMessage && <div className='text-[#ef4444] text-sm'>{errorMessage}</div>}
         </form>
       </div>
       <div className='text-white flex justify-center w-full mr-20'>
