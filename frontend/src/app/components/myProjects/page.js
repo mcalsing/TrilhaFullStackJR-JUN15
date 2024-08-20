@@ -8,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [projectUpdate, setProjectUpdate] = useState('');
+  const [currentProject, setCurrentProject] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
   const getProjects = async () => {
@@ -30,9 +30,10 @@ export default function MyProjects() {
   }
 
   const handleUpdate = async (id, title, description) => {
+    console.log('entrei no editar')
     setIsEditing(true);
 
-    setProjectUpdate({
+    setCurrentProject({
       id: id,
       title: title,
       description: description
@@ -41,7 +42,7 @@ export default function MyProjects() {
 
   const sendUpdate = async (event) => {
     event.preventDefault();
-    const { id, title, description } = projectUpdate;
+    const { id, title, description } = currentProject;
        
     const response = await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
     const copyOfProjects = [...projects]
@@ -50,7 +51,7 @@ export default function MyProjects() {
     copyOfProjects[index] = response.data;
 
     setProjects(copyOfProjects);
-    setProjectUpdate({
+    setCurrentProject({
       title: '',
       description: ''
     });
@@ -59,8 +60,9 @@ export default function MyProjects() {
 
   const cancelUpdate = (event) => {
     event.preventDefault();
+    console.log('entrei no cancelar')
     setIsEditing(false);
-    setProjectUpdate({
+    setCurrentProject({
       title: '',
       description: ''
     });
@@ -68,11 +70,13 @@ export default function MyProjects() {
 
   const createProject = async (event) => {
     event.preventDefault();
-    const { title, description } = projectUpdate;
+    console.log('entrei no create')
+    console.log(currentProject)
+    const { title, description } = currentProject;
 
     const response = await axios.post('http://localhost:3334/api/projects', { title, description });
     setProjects([...projects, response.data]);
-    setProjectUpdate({
+    setCurrentProject({
       title: '',
       description: ''
     });
@@ -92,8 +96,8 @@ export default function MyProjects() {
             type='text'
             placeholder='Títudo do projeto'
             className='py-1 px-5 rounded-3xl'
-            value={projectUpdate.title}
-            onChange={(e) => setProjectUpdate({ ...projectUpdate, title: e.target.value })}
+            value={currentProject.title}
+            onChange={(e) => setCurrentProject({ ...currentProject, title: e.target.value })}
           />
           <textarea
             name='description'
@@ -102,8 +106,8 @@ export default function MyProjects() {
             rows='8'
             placeholder='Descrição'
             className='py-1 px-5 rounded-3xl'
-            value={projectUpdate.description}
-            onChange={(e) => setProjectUpdate({ ...projectUpdate, description: e.target.value })}
+            value={currentProject.description}
+            onChange={(e) => setCurrentProject({ ...currentProject, description: e.target.value })}
           />
           {isEditing ? (
             <div className='grid grid-flow-col justify-stretch gap-5 w-full h-10 mt-4'>
@@ -125,7 +129,7 @@ export default function MyProjects() {
             {(projects.length > 0) ? (
               <div className='text-black flex flex-wrap justify-center gap-10'>
                 {projects.map(item => (
-                  <div key={item._id} className='flex flex-col  bg-white p-6 rounded-md w-[400px] text-justify'>
+                  <div key={item._id} className='flex flex-col bg-white p-6 rounded-md w-[400px] text-justify'>
                     <div className='flex relative'>
                       <h2 className='font-bold mb-2'>Título: {item.title}</h2>
                       <MdDelete 
@@ -133,10 +137,10 @@ export default function MyProjects() {
                         onClick={() => handleDelete(item._id)}
                       />
                     </div>
-                    <p><strong>Descrição:</strong> {item.description}</p>
-                    <div className=''>
+                    <p className='break-words'><strong>Descrição:</strong> {item.description}</p>
+                    <div className='mt-auto'>
                       <button 
-                        className='bg-[#ef4444] text-white w-full py-2 mt-4 rounded-md'
+                        className='bg-[#ef4444] text-black w-full py-2 mt-4 rounded-md'
                         onClick={() => handleUpdate(item._id, item.title, item.description)}
                       >
                         Editar Projeto

@@ -10,13 +10,14 @@ module.exports = {
 
   async create(req, res) {
     const { title, description } = req.body;
+    console.log(title)
     
     const projectCreated = await Project.create({ title, description });
 
     return res.json(projectCreated)
   },
 
-  async updade(req, res) {
+  async update(req, res) {
     const { title, description } = req.body;
     const { id } = req.params;
 
@@ -24,10 +25,10 @@ module.exports = {
       return res.status(401).json({ error: "ID deve ter 24 characteres"})
     }
 
-    const updadeProject = await Project.findByIdAndUpdate(id, { title, description }, { new: true });
+    const updateProject = await Project.findByIdAndUpdate(id, { title, description }, { new: true });
 
-    if (updadeProject) {
-      return res.json(updadeProject);
+    if (updateProject) {
+      return res.json(updateProject);
     }
 
     return res.status(401).json({ error: "Registro não encontrado!"});

@@ -8,7 +8,7 @@ const validateProject = require('./middlewares/validateProject');
 
 routes.get('/api/projects', ProjectController.getAll);
 routes.post('/api/projects',validateProject, ProjectController.create);
-routes.put('/api/projects/:id',validateProject, ProjectController.updade);
+routes.put('/api/projects/:id',validateProject, ProjectController.update);
 routes.delete('/api/projects/:id', ProjectController.delete);
 
 routes.get('/user', UserController.getAll);
