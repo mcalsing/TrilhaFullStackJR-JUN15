@@ -11,6 +11,9 @@ routes.post('/api/projects',validateProject, ProjectController.create);
 routes.put('/api/projects/:id',validateProject, ProjectController.update);
 routes.delete('/api/projects/:id', ProjectController.delete);
 
+
+routes.post('/login', UserController.login);
+
 routes.get('/user', UserController.getAll);
 routes.post('/user', validateCreation, UserController.create);
 routes.delete('/user/:id', UserController.delete);

@@ -6,24 +6,33 @@ import {FaUser, FaLock, FaAt} from "react-icons/fa";
 
 export default function CreateAccount() {
   const [user, setUser] = useState('');
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('');
 
   const createUser = async (event) => {
     event.preventDefault();
     const {firstName, lastName, email, password} = user;
 
-    const response = await axios.post('http://localhost:3334/user', { firstName, lastName, email, password });
-    console.log(response.data);
-    setUser({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: ''
-    })
-    setErrorMessage('Usuário criado com sucesso!')
-    setTimeout(() => {
-      setErrorMessage('')
-    }, 5000);
+    try {
+      const response = await axios.post('http://localhost:3334/user', { firstName, lastName, email, password });
+      console.log(response.data);
+      setUser({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+      })
+
+      setErrorMessage("Conta criada com sucesso!")
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000);
+
+    } catch (error) {
+      setErrorMessage(error.response.data.message)
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000);
+    }
   }
 
   return (
@@ -78,14 +87,14 @@ export default function CreateAccount() {
           <div className="mt-11 flex flex-col items-center">
             <div className="border-b border-red-500 mb-11 w-2/3"></div>
             <button 
-              className="bg-[#ef4444] text-black text-2xl w-full h-10 rounded-md"
+              className="bg-[#ef4444] text-white text-2xl w-full h-10 rounded-md"
               onClick={createUser}
             >
               Criar
             </button>
-            {errorMessage && <div className='text-[#ef4444] text-md pt-3'>{errorMessage}</div>}
           </div>
         </form>
+        {errorMessage && <div className='text-[#ef4444] text-sm mb-4'>{errorMessage}</div>}
       </div>
     </main>
   );

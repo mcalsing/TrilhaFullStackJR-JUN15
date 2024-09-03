@@ -1,6 +1,8 @@
 const User = require('../models/UserModel');
 const bcrypt = require('bcrypt');
 const { userSchema } = require('../utils/validations');
+const createToken = require('../utils/generateToken');
+
 
 module.exports = {
 
@@ -34,5 +36,19 @@ module.exports = {
     }
 
     return res.status(401).json({ error: "Registro não encontrado!" });
+  },
+
+  async login(req, res) {
+    const {email, password} = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (user.email !== email || !bcrypt.compareSync(password, user?.password)) {
+      return res.status(401).json({message: 'E-mail ou senha estão incorretos'})
+    }
+
+    const token = createToken(email);
+    return res.json(token)
+
   }
 };
