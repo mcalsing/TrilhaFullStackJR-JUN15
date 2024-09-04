@@ -48,6 +48,19 @@ module.exports = {
     }
 
     const token = createToken(email);
-    return res.json({token: token})
+    return res.json({token: token, user: user.firstName})
+  },
+
+  async getById(req, res) {
+    const id = req.params.id
+
+    try {
+      const user = await User.findById(id, '-password')
+
+    return res.json({ user })
+
+    } catch (error) {
+      return res.status(401).json({error: "Algo deu errado"})
+    }
   }
 };

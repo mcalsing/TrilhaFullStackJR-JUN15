@@ -3,19 +3,19 @@ const jwt = require('jsonwebtoken');
 const TOKEN_SECRET = 'jwt_secret';
 
 const verifyToken = async (req, res, next) => {
-  const token = req.headers.authorization;
-
+  const tokenBearer = req.headers.authorization;
+  const token = tokenBearer && tokenBearer.split(" ")[1]
+ 
   try {
     if (!token) {
     return res.status(401).json({error : 'Token não encontrado!'})
+
     }
-  
-    const decodeToken = jwt.verify(token, TOKEN_SECRET);
-    return res.json({login: true, data: decodeToken})
+    jwt.verify(token, TOKEN_SECRET);
 
     next();
 
-  } catch {
+  } catch (error) {
     return res.status(401).json({error: "Forneça um token válido"})
   }
 }

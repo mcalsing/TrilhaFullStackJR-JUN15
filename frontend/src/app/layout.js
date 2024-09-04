@@ -21,6 +21,9 @@ export default function RootLayout({ children }) {
                 <a href="/components/myProjects" className="text-white mr-5 hover:text-[#ef4444]">
                   Meus Projetos
                 </a>
+                <a href="/components/profile" className="text-white mr-5 hover:text-[#ef4444]">
+                  Perfil
+                </a>
               </div>
             </nav>
           </header>

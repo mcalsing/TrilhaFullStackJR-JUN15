@@ -1,18 +1,28 @@
 "use client"
 
+import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import {FaAt, FaLock} from "react-icons/fa"
 import { useState } from "react";
+import axios from 'axios';
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const HandleSubmit = (event) => {
+  const router = useRouter();
+
+  const handleLogin = async (event) => {
     event.preventDefault();
 
-    console.log(email);
-    console.log(password);
+    const response = await axios.post("http://localhost:3334/login", {email, password});
+    console.log(response.data)
+    const dataToStorage = response.data
+
+    const dataToStorageJSON = JSON.stringify(dataToStorage);
+    window.localStorage.setItem("tokenFullStack", dataToStorageJSON);
+
+    router.push("/components/myProjects")
   };
 
   return (
@@ -26,7 +36,7 @@ export default function Home() {
         </div>
         <div className="text-xl flex flex-col items-center justify-center border-2 border-red-500 rounded-e-lg">
           <h1 className="text-3xl text-white">Bem-Vindo!</h1>
-          <form className="p-10 rounded-md" onSubmit={HandleSubmit}>
+          <form className="p-10 rounded-md" onSubmit={handleLogin}>
             <div className="pb-5 flex relative">
               <input 
                 type="email"
@@ -50,7 +60,12 @@ export default function Home() {
             </div> 
             <div className="mt-11 flex flex-col items-center">
               <div className="border-b border-[#ef4444] mb-11 w-2/3"></div>
-              <button className="bg-[#ef4444] text-black text-2xl w-full h-10 rounded-md">Entrar</button>
+              <button 
+                className="bg-[#ef4444] text-black text-2xl w-full h-10 rounded-md"
+                onClick={handleLogin}
+              >
+                Entrar
+              </button>
             </div>
             <div className="text-white mt-5 flex justify-center">
               <a className="text-base" href="/components/createAccount">Criar Conta</a>

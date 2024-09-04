@@ -14,10 +14,11 @@ routes.put('/api/projects/:id',validateProject, ProjectController.update);
 routes.delete('/api/projects/:id', ProjectController.delete);
 
 
-routes.post('/login', validateLogin, validateToken, UserController.login);
+routes.post('/login', validateLogin, UserController.login);
 
 routes.get('/user', UserController.getAll);
 routes.post('/user', validateCreation, UserController.create);
+routes.get('/user/:id', validateToken, UserController.getById);
 routes.delete('/user/:id', UserController.delete);
 
 module.exports = routes;
