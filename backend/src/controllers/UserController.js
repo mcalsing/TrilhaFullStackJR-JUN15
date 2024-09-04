@@ -35,20 +35,19 @@ module.exports = {
       return res.json(deleteUser);
     }
 
-    return res.status(401).json({ error: "Registro não encontrado!" });
+    return res.status(404).json({ error: "Registro não encontrado!" });
   },
 
   async login(req, res) {
     const {email, password} = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
 
-    if (user.email !== email || !bcrypt.compareSync(password, user?.password)) {
-      return res.status(401).json({message: 'E-mail ou senha estão incorretos'})
+    if (user?.email !== email || !bcrypt.compareSync(password, user?.password)) {
+      return res.status(401).json({error: 'E-mail ou senha estão incorretos!'})
     }
 
     const token = createToken(email);
-    return res.json(token)
-
+    return res.json({token: token})
   }
 };

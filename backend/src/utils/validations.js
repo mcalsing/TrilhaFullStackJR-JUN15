@@ -10,6 +10,11 @@ const userSchema = Joi.object({
 const projectSchema = Joi.object({
   title: Joi.string().min(3).required(),
   description: Joi.string().min(10).required(),
-})
+});
 
-module.exports = { userSchema, projectSchema };
+const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(5).required(),
+});
+
+module.exports = { userSchema, projectSchema, loginSchema };
