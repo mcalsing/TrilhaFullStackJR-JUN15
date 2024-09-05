@@ -1,22 +1,25 @@
 "use client"
-
-// para "funcionar" localstorage no lado servidor
-const isBrowser = typeof window !== 'undefined';
-
-let NAMEFROM = '';
-
-if (isBrowser && window.localStorage.getItem("tokenFullStack")) {
-  const dataFromLocalStorageString = localStorage.getItem("tokenFullStack");
-  const dataFromLocalStorageJSON= JSON.parse(dataFromLocalStorageString);
-  NAMEFROM = dataFromLocalStorageJSON.user
-}
+// import { useEffect, useState } from 'react';
 
 export default function Profile() {
-
+ /*  useEffect(() => {
+    const getData = async () => {
+      const dataFromLocalStorageString = localStorage.getItem('tokenFullStack');
+      const dataFromLocalStorageJSON = JSON.parse(dataFromLocalStorageString)
+      console.log(dataFromLocalStorageJSON.id);
+      const id = dataFromLocalStorageJSON.id;
+  
+  
+      const response = await axios.get("http://localhost:3334/user/id");
+      console.log(response.data)
+      
+    }
+    getData();
+  });
+ */
   return (
     <div>
-      <h1 className="text-slate-100">{`Bem-Vindo ao seu perfil ${NAMEFROM}`}</h1>
-      
+      <h1 className="text-slate-100">{`Bem-vindo ao seu perfil`}</h1>
     </div>
   );
 }

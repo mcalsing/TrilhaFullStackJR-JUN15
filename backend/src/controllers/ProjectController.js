@@ -9,9 +9,9 @@ module.exports = {
   },
 
   async create(req, res) {
-    const { title, description } = req.body;
+    const { createdByUserId, title, description } = req.body;
     
-    const projectCreated = await Project.create({ title, description });
+    const projectCreated = await Project.create({ createdByUserId, title, description });
 
     return res.json(projectCreated);
   },

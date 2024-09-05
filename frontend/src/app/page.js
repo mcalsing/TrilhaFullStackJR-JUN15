@@ -17,12 +17,12 @@ export default function Home() {
 
     const response = await axios.post("http://localhost:3334/login", {email, password});
     console.log(response.data)
-    const dataToStorage = response.data
+    const dataToStorage = response.data;
 
     const dataToStorageJSON = JSON.stringify(dataToStorage);
     window.localStorage.setItem("tokenFullStack", dataToStorageJSON);
 
-    router.push("/components/myProjects")
+    router.push("/components/myProjects");
   };
 
   return (

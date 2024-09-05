@@ -48,7 +48,7 @@ module.exports = {
     }
 
     const token = createToken(email);
-    return res.json({token: token, user: user.firstName})
+    return res.json({id: user._id, token: token, user: user.firstName,})
   },
 
   async getById(req, res) {

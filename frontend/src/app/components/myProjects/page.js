@@ -4,26 +4,36 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { MdDelete } from "react-icons/md";
 
-
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentProject, setCurrentProject] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
-  const getProjects = async () => {
-    const response = await axios.get('http://localhost:3334/api/projects');
-    setProjects(response.data)
-  };
+  const [createdByUserId, setCreatedByUserId] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
-    setTimeout(() => {
-      getProjects();
+
+    const dataFromLocalStorageString = localStorage.getItem('tokenFullStack');
+    const dataFromLocalStorageJSON = JSON.parse(dataFromLocalStorageString);
+    setCreatedByUserId(dataFromLocalStorageJSON.id);
+    
+  }, []);
+
+  useEffect(() => {
+    if (createdByUserId) {
+      // Só busca projetos quando o ID do usuário estiver disponível no state
+      getProjects(createdByUserId);
       setIsLoading(false);
-    }, 1000);
-  }, [])
+    }
+  }, [createdByUserId]);
+
+  const getProjects = async (userId) => {
+    const response = await axios.get('http://localhost:3334/api/projects');
+    const userProjects = response.data.filter(project => project.createdByUserId === userId )
+    setProjects(userProjects)
+  };
 
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:3334/api/projects/${id}`);
@@ -81,7 +91,7 @@ export default function MyProjects() {
     const { title, description } = currentProject;
 
     try {
-      const response = await axios.post('http://localhost:3334/api/projects', { title, description });
+      const response = await axios.post('http://localhost:3334/api/projects', { createdByUserId, title, description });
       setProjects([...projects, response.data]);
       setCurrentProject({
         title: '',
