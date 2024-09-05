@@ -4,6 +4,8 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { MdDelete } from "react-icons/md";
 
+const URL = 'https://trilhafullstack.onrender.com'
+
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,18 +27,21 @@ export default function MyProjects() {
     if (createdByUserId) {
       // Só busca projetos quando o ID do usuário estiver disponível no state
       getProjects(createdByUserId);
-      setIsLoading(false);
+      
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     }
   }, [createdByUserId]);
 
   const getProjects = async (userId) => {
-    const response = await axios.get('http://localhost:3334/api/projects');
+    const response = await axios.get(`${URL}/api/projects`);
     const userProjects = response.data.filter(project => project.createdByUserId === userId )
     setProjects(userProjects)
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3334/api/projects/${id}`);
+    await axios.delete(`${URL}/api/projects/${id}`);
     setProjects(projects.filter(project => project._id !== id));
   }
 
@@ -55,7 +60,7 @@ export default function MyProjects() {
     const { id, title, description } = currentProject;
     
     try {
-      const response = await axios.put(`http://localhost:3334/api/projects/${id}`, { title, description });
+      const response = await axios.put(`${URL}/api/projects/${id}`, { createdByUserId, title, description });
       const copyOfProjects = [...projects]
       const index = copyOfProjects.findIndex(project => project._id === id);
   
@@ -78,7 +83,6 @@ export default function MyProjects() {
 
   const cancelUpdate = (event) => {
     event.preventDefault();
-    console.log('entrei no cancelar')
     setIsEditing(false);
     setCurrentProject({
       title: '',
@@ -91,7 +95,7 @@ export default function MyProjects() {
     const { title, description } = currentProject;
 
     try {
-      const response = await axios.post('http://localhost:3334/api/projects', { createdByUserId, title, description });
+      const response = await axios.post(`${URL}/api/projects`, { createdByUserId, title, description });
       setProjects([...projects, response.data]);
       setCurrentProject({
         title: '',

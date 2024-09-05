@@ -6,6 +6,8 @@ import {FaAt, FaLock} from "react-icons/fa"
 import { useState } from "react";
 import axios from 'axios';
 
+const URL = 'https://trilhafullstack.onrender.com'
+
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +17,7 @@ export default function Home() {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post("http://localhost:3334/login", {email, password});
+    const response = await axios.post(`${URL}/login`, {email, password});
     console.log(response.data)
     const dataToStorage = response.data;
 

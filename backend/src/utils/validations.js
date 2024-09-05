@@ -8,7 +8,7 @@ const userSchema = Joi.object({
 });
 
 const projectSchema = Joi.object({
-  createdByUserId: Joi.string().required(),
+  // createdByUserId: Joi.string(),
   title: Joi.string().min(3).required(),
   description: Joi.string().min(10).required(),
 });

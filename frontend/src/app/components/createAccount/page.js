@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import {FaUser, FaLock, FaAt} from "react-icons/fa";
 
+const URL = 'https://trilhafullstack.onrender.com'
+
 export default function CreateAccount() {
   const [user, setUser] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -13,7 +15,7 @@ export default function CreateAccount() {
     const {firstName, lastName, email, password} = user;
 
     try {
-      const response = await axios.post('http://localhost:3334/user', { firstName, lastName, email, password });
+      const response = await axios.post(`${URL}/user`, { firstName, lastName, email, password });
       console.log(response.data);
       setUser({
         firstName: '',
