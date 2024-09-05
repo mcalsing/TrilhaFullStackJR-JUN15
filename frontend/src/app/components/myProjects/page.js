@@ -3,8 +3,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { MdDelete } from "react-icons/md";
+import { useRouter } from 'next/navigation';
 
 const URL = 'https://trilhafullstack.onrender.com'
+const URL2 = 'http://localhost:3334'
 
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);
@@ -14,12 +16,22 @@ export default function MyProjects() {
   const [errorMessage, setErrorMessage] = useState('');
   const [createdByUserId, setCreatedByUserId] = useState(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     setIsLoading(true);
 
     const dataFromLocalStorageString = localStorage.getItem('tokenFullStack');
-    const dataFromLocalStorageJSON = JSON.parse(dataFromLocalStorageString);
-    setCreatedByUserId(dataFromLocalStorageJSON.id);
+    
+    if (dataFromLocalStorageString == null) {
+      console.error("Usuário não está logado")
+      router.push("/");
+    }
+    
+    setTimeout(() => {
+      const dataFromLocalStorageJSON = JSON.parse(dataFromLocalStorageString);
+      setCreatedByUserId(dataFromLocalStorageJSON.id);
+    }, 500);
     
   }, []);
 
@@ -30,7 +42,7 @@ export default function MyProjects() {
       
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
+      }, 1000);
     }
   }, [createdByUserId]);
 
@@ -143,7 +155,7 @@ export default function MyProjects() {
               <button className='bg-[#ef4444] rounded-md' onClick={cancelUpdate}>Cancelar</button>
             </div>
           ) : (
-            <button className='bg-[#ef4444] w-full py-2 mt-4 rounded-md' onClick={createProject}>Cadastrar</button>
+            <button className='bg-[#ef4444] w-full py-2 mt-4 rounded-md text-white' onClick={createProject}>Cadastrar</button>
           )}
           {errorMessage && <div className='text-[#ef4444] text-sm'>{errorMessage}</div>}
         </form>

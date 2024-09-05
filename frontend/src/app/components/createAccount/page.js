@@ -86,8 +86,8 @@ export default function CreateAccount() {
             />
             <FaLock className="absolute right-2 top-3"/>
           </div>
-          <div className="mt-11 flex flex-col items-center">
-            <div className="border-b border-red-500 mb-11 w-2/3"></div>
+          <div className="mt-8 flex flex-col items-center">
+            <div className="border-b border-red-500 mb-8 w-2/3"></div>
             <button 
               className="bg-[#ef4444] text-white text-2xl w-full h-10 rounded-md"
               onClick={createUser}

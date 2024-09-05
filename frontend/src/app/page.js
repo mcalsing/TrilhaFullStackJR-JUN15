@@ -7,6 +7,7 @@ import { useState } from "react";
 import axios from 'axios';
 
 const URL = 'https://trilhafullstack.onrender.com'
+const URL2 = 'http://localhost:3334'
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -18,7 +19,6 @@ export default function Home() {
     event.preventDefault();
 
     const response = await axios.post(`${URL}/login`, {email, password});
-    console.log(response.data)
     const dataToStorage = response.data;
 
     const dataToStorageJSON = JSON.stringify(dataToStorage);
@@ -61,9 +61,9 @@ export default function Home() {
               <a className="absolute right-0 text-base" href="#">Esqueceu a senha?</a>
             </div> 
             <div className="mt-11 flex flex-col items-center">
-              <div className="border-b border-[#ef4444] mb-11 w-2/3"></div>
+              <div className="border-b border-[#ef4444] mb-8 w-2/3"></div>
               <button 
-                className="bg-[#ef4444] text-black text-2xl w-full h-10 rounded-md"
+                className="bg-[#ef4444] text-white text-2xl w-full h-10 rounded-md"
                 onClick={handleLogin}
               >
                 Entrar

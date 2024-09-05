@@ -6,9 +6,29 @@ const routes = require('./routes');
 const conn = require('./database/dbConfig');
 conn();
 
+const URL = 'https://trilha-full-stack.vercel.app';
+const URL2 = 'http://localhost:3000'
+
 const app = express();
 app.use(express.json());
-app.use(cors({origin: 'https://trilha-full-stack.vercel.app'}));
+app.use(cors({origin: URL}));
+
+/* const allowedOrigins = ['https://trilha-full-stack.vercel.app', 'http://localhost:3000'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Permitir requisições sem origem (como Postman ou servidores internos)
+    if (!origin) return callback(null, true);
+    
+    // Verifica se a origem está na lista de permitidas
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  }
+})); */
+
 app.use(routes);
 
 app.listen(3334, function() {
