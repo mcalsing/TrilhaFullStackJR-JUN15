@@ -8,7 +8,7 @@ conn();
 
 const app = express();
 app.use(express.json());
-app.use(cors({origin: 'https://trilhafullstack.onrender.com'}));
+app.use(cors({origin: 'https://trilha-full-stack.vercel.app'}));
 app.use(routes);
 
 app.listen(3334, function() {
