@@ -10,21 +10,32 @@ const URL = 'https://trilhafullstack.onrender.com'
 const URL2 = 'http://localhost:3334'
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const router = useRouter();
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post(`${URL}/login`, {email, password});
-    const dataToStorage = response.data;
+    try {
+      const response = await axios.post(`${URL2}/login`, {email, password});
+      const dataToStorage = response.data;
+  
+      const dataToStorageJSON = JSON.stringify(dataToStorage);
+      window.localStorage.setItem("tokenFullStack", dataToStorageJSON);
+  
+      router.push("/components/myProjects");
 
-    const dataToStorageJSON = JSON.stringify(dataToStorage);
-    window.localStorage.setItem("tokenFullStack", dataToStorageJSON);
+      setErrorMessage('Login feito com sucesso!')
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000);
+    }
 
-    router.push("/components/myProjects");
   };
 
   return (
@@ -43,19 +54,19 @@ export default function Home() {
               <input 
                 type="email"
                 placeholder="E-mail"
-                className="py-2 px-8 rounded-3xl"
+                className="py-2 px-5 rounded-xl w-full"
                 onChange={(e) => setEmail(e.target.value)}
                 />
-                <FaAt className="absolute right-2 top-3"/>
+                <FaAt className="absolute right-1 top-3 w-3"/>
             </div>
             <div className="pb-2 flex relative">
               <input 
                 type="password" 
                 placeholder="Senha"
-                className="py-2 px-8 rounded-3xl"
+                className="py-2 px-5 rounded-xl w-full"
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <FaLock className="absolute right-2 top-3"/>
+              <FaLock className="absolute right-1 top-3 w-3"/>
             </div>
             <div className="text-white relative">
               <a className="absolute right-0 text-base" href="#">Esqueceu a senha?</a>
@@ -73,6 +84,7 @@ export default function Home() {
               <a className="text-base" href="/components/createAccount">Criar Conta</a>
             </div>
           </form>
+          {errorMessage && <div className='text-[#ef4444] text-sm'>{errorMessage}</div>}
         </div>
       </div>
     </main>

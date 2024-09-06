@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import {FaUser, FaLock, FaAt} from "react-icons/fa";
 
-const URL = 'https://trilhafullstack.onrender.com'
+const URL = 'https://trilhafullstack.onrender.com';
+const URL2 = 'http://localhost:3334';
 
 export default function CreateAccount() {
   const [user, setUser] = useState('');
@@ -47,44 +48,44 @@ export default function CreateAccount() {
               name='firstName'
               type='text'
               placeholder='Primeiro Nome'
-              className='py-2 px-8 rounded-3xl'
+              className='py-2 px-5 rounded-xl'
               value={user.firstName}
               onChange={(e) => setUser({ ...user, firstName: e.target.value })}
               />
-              <FaUser className="absolute right-2 top-3"/>
+              <FaUser className="absolute right-1 top-3 w-3"/>
           </div>
           <div className="pb-5 flex relative">
             <input
               name='lastName'
               type='text'
               placeholder='Último Nome'
-              className='py-2 px-8 rounded-3xl'
+              className='py-2 px-5 rounded-xl'
               value={user.lastName}
               onChange={(e) => setUser({ ...user, lastName: e.target.value })}
               />
-              <FaUser className="absolute right-2 top-3"/>
+              <FaUser className="absolute right-1 top-3 w-3"/>
           </div>
           <div className="pb-5 flex relative">
             <input
               name='email'
               type='email'
               placeholder='E-mail'
-              className='py-2 px-8 rounded-3xl'
+              className='py-2 px-5 rounded-xl'
               value={user.email}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
-              <FaAt className="absolute right-2 top-3"/>
+              <FaAt className="absolute right-1 top-3 w-3"/>
           </div>
           <div className="pb-2 flex relative">
             <input
               name='password'
               type="password" 
               placeholder="Senha"
-              className="py-2 px-8 rounded-3xl"
+              className="py-2 px-5 rounded-xl"
               value={user.password}
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
-            <FaLock className="absolute right-2 top-3"/>
+            <FaLock className="absolute right-1 top-3 w-3"/>
           </div>
           <div className="mt-8 flex flex-col items-center">
             <div className="border-b border-red-500 mb-8 w-2/3"></div>

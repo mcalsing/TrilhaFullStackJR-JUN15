@@ -47,13 +47,13 @@ export default function MyProjects() {
   }, [createdByUserId]);
 
   const getProjects = async (userId) => {
-    const response = await axios.get(`${URL}/api/projects`);
+    const response = await axios.get(`${URL2}/api/projects`);
     const userProjects = response.data.filter(project => project.createdByUserId === userId )
     setProjects(userProjects)
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`${URL}/api/projects/${id}`);
+    await axios.delete(`${URL2}/api/projects/${id}`);
     setProjects(projects.filter(project => project._id !== id));
   }
 
@@ -72,7 +72,7 @@ export default function MyProjects() {
     const { id, title, description } = currentProject;
     
     try {
-      const response = await axios.put(`${URL}/api/projects/${id}`, { createdByUserId, title, description });
+      const response = await axios.put(`${URL2}/api/projects/${id}`, { createdByUserId, title, description });
       const copyOfProjects = [...projects]
       const index = copyOfProjects.findIndex(project => project._id === id);
   
@@ -107,7 +107,7 @@ export default function MyProjects() {
     const { title, description } = currentProject;
 
     try {
-      const response = await axios.post(`${URL}/api/projects`, { createdByUserId, title, description });
+      const response = await axios.post(`${URL2}/api/projects`, { createdByUserId, title, description });
       setProjects([...projects, response.data]);
       setCurrentProject({
         title: '',
@@ -134,8 +134,8 @@ export default function MyProjects() {
           <input
             name='title'
             type='text'
-            placeholder='Títudo do projeto'
-            className='py-1 px-5 rounded-3xl'
+            placeholder='Título do projeto'
+            className='py-2 px-5 rounded-xl'
             value={currentProject.title}
             onChange={(e) => setCurrentProject({ ...currentProject, title: e.target.value })}
           />
@@ -145,7 +145,7 @@ export default function MyProjects() {
             cols='23'
             rows='8'
             placeholder='Descrição'
-            className='py-1 px-5 rounded-3xl'
+            className='py-1 px-5 rounded-xl'
             value={currentProject.description}
             onChange={(e) => setCurrentProject({ ...currentProject, description: e.target.value })}
           />
