@@ -20,7 +20,7 @@ export default function Home() {
     event.preventDefault();
 
     try {
-      const response = await axios.post(`${URL2}/login`, {email, password});
+      const response = await axios.post(`${URL}/login`, {email, password});
       const dataToStorage = response.data;
   
       const dataToStorageJSON = JSON.stringify(dataToStorage);
@@ -43,7 +43,7 @@ export default function Home() {
       <div className="h-[500px] lg:mx-16 xl:mx-28 2xl:mx-48 grid grid-cols-2">
         <div className="bg-[#ef4444] rounded-s-lg relative">
           {/* <Image className="relative invert" src="/black_ink_circle.png" alt="logo" width={500} height={24}></Image> */}
-          <Image className="absolute top-14 ml-32 " src="/menina_fundo.png" alt="log" width={300} height={24}></Image>
+          <Image className="absolute top-14 ml-32" src="/menina_fundo.png" alt="log" width={300} height={24}></Image>
           <h1 className="absolute xl:right-8 2xl:right-14 xl:top-6 2xl:top-10 top-1 text-black lg:text-lg xl:text-2xl 2xl:text-3xl font-bold">Código Certo</h1>
           <h1 className="absolute xl:right-0 2xl:right-6 xl:top-14 2xl:top-20 top-7 text-white lg:text-md xl:text-lg 2xl:text-xl">Construindo o amanhã, hoje.</h1>
         </div>

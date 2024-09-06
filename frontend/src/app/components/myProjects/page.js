@@ -47,13 +47,13 @@ export default function MyProjects() {
   }, [createdByUserId]);
 
   const getProjects = async (userId) => {
-    const response = await axios.get(`${URL2}/api/projects`);
+    const response = await axios.get(`${URL}/api/projects`);
     const userProjects = response.data.filter(project => project.createdByUserId === userId )
     setProjects(userProjects)
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`${URL2}/api/projects/${id}`);
+    await axios.delete(`${URL}/api/projects/${id}`);
     setProjects(projects.filter(project => project._id !== id));
   }
 
@@ -72,7 +72,7 @@ export default function MyProjects() {
     const { id, title, description } = currentProject;
     
     try {
-      const response = await axios.put(`${URL2}/api/projects/${id}`, { createdByUserId, title, description });
+      const response = await axios.put(`${URL}/api/projects/${id}`, { createdByUserId, title, description });
       const copyOfProjects = [...projects]
       const index = copyOfProjects.findIndex(project => project._id === id);
   
@@ -107,7 +107,7 @@ export default function MyProjects() {
     const { title, description } = currentProject;
 
     try {
-      const response = await axios.post(`${URL2}/api/projects`, { createdByUserId, title, description });
+      const response = await axios.post(`${URL}/api/projects`, { createdByUserId, title, description });
       setProjects([...projects, response.data]);
       setCurrentProject({
         title: '',

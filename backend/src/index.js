@@ -11,7 +11,7 @@ const URL2 = 'http://localhost:3000'
 
 const app = express();
 app.use(express.json());
-app.use(cors({origin: URL2}));
+app.use(cors({origin: URL}));
 
 /* const allowedOrigins = ['https://trilha-full-stack.vercel.app', 'http://localhost:3000'];
 
