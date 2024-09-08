@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-const URL2 = 'http://localhost:3334/user';
+const URL = 'https://trilhafullstack.onrender.com'
+// const URL = 'http://localhost:3334/user';
 
 export default function Profile() {
   const [profileData, setProfileData] = useState({
@@ -24,7 +25,7 @@ export default function Profile() {
     try {      
       setProfileData((prevState) => ({ ...prevState, isLoading: true }));
 
-      const { data } = await axios.get(`${URL2}/${dataFromLocalStorageJSON.id}`, {
+      const { data } = await axios.get(`${URL}/${dataFromLocalStorageJSON.id}`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -38,8 +39,6 @@ export default function Profile() {
         isLoading: false
       }));
 
-      console.log("response##", data.user.firstName);
-      console.log("response2##", profileData.firstName);
       setFirstName(data.user.firstName);
 
     } catch (error) {
@@ -52,10 +51,9 @@ export default function Profile() {
   }, []);
    
   return (
-    <div className="text-black flex flex-col w-full bg-slate-300 text-xl h-20">
-         
+    <div className="text-black flex flex-col w-full h-full">         
         {profileData.error && <span className="text-red-500">{profileData.errorMessage}</span>}
-        <span className="text-black">{`Bem vindo, ${profileData.firstName}`}</span>
+        <span className="text-white font-light text-2xl">{`Bem vindo, ${profileData.firstName}`}</span>
     </div>
   );
 }

@@ -3,37 +3,45 @@
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import {FaAt, FaLock} from "react-icons/fa"
+import {FiLoader} from "react-icons/fi"
 import { useState } from "react";
 import axios from 'axios';
 
 const URL = 'https://trilhafullstack.onrender.com'
-const URL2 = 'http://localhost:3334'
+// const URL = 'http://localhost:3334'
 
 export default function Home() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const router = useRouter();
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     try {
-      const response = await axios.post(`${URL}/login`, {email, password});
+      if(!loginData.email || !loginData.password) {
+        setIsLoading(false);
+        setErrorMessage('Preencha todos os campos');
+        return
+      }
+      const response = await axios.post(`${URL}/login`, { email: loginData.email, password: loginData.password });
       const dataToStorage = response.data;
   
       const dataToStorageJSON = JSON.stringify(dataToStorage);
       window.localStorage.setItem("tokenFullStack", dataToStorageJSON);
   
-      router.push("/components/myProjects");
-
-      setErrorMessage('Login feito com sucesso!')
-    } catch (error) {
-      setErrorMessage(error.response.data.message);
-      setTimeout(() => {
-        setErrorMessage('')
-      }, 5000);
+      if(response.status === 200) {
+        router.push("/components/myProjects");            
+      }
+    } catch (error) {    
+      setIsLoading(false);
+      setErrorMessage(error.response.data.message);    
     }
 
   };
@@ -55,7 +63,7 @@ export default function Home() {
                 type="email"
                 placeholder="E-mail"
                 className="py-2 px-5 rounded-xl w-full"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setLoginData((prevState) => ({...prevState, email: e.target.value}))}
                 />
                 <FaAt className="absolute right-1 top-3 w-3"/>
             </div>
@@ -64,7 +72,7 @@ export default function Home() {
                 type="password" 
                 placeholder="Senha"
                 className="py-2 px-5 rounded-xl w-full"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setLoginData((prevState) => ({...prevState, password: e.target.value}))}
               />
               <FaLock className="absolute right-1 top-3 w-3"/>
             </div>
@@ -74,10 +82,15 @@ export default function Home() {
             <div className="mt-11 flex flex-col items-center">
               <div className="border-b border-[#ef4444] mb-8 w-2/3"></div>
               <button 
-                className="bg-[#ef4444] text-white text-2xl w-full h-10 rounded-md"
+                className="bg-[#ef4444] relative text-white text-2xl w-full h-10 rounded-md"
                 onClick={handleLogin}
               >
-                Entrar
+                {
+                  isLoading  && (
+                  <FiLoader className="text-white animate-spin ml-24 top-2 absolute" />
+                  )
+                }
+                <span>Entrar</span>
               </button>
             </div>
             <div className="text-white mt-5 flex justify-center">

@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { useRouter } from 'next/navigation';
 
 const URL = 'https://trilhafullstack.onrender.com'
-const URL2 = 'http://localhost:3334'
+// const URL2 = 'http://localhost:3334'
 
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);
@@ -123,9 +123,10 @@ export default function MyProjects() {
   };
 
   return (
-    <main className='flex'>
-      <div>
-        <form className='w-[400px] border-2 border-[#ef4444] mx-20 p-5 rounded-md flex flex-col items-center gap-5'>
+    <div className='flex w-full justify-center h-screen gap-10 m-auto'>
+      <div className='w-3/12 px-4'>
+      <div className="p-5 border-[1px] border-[#ef4444] rounded-md">
+        <form className='w-full flex flex-col justify-between gap-4'>
           {isEditing ? (
             <h1 className='text-2xl text-white'>Editar Projeto</h1>
           ) : (
@@ -135,7 +136,7 @@ export default function MyProjects() {
             name='title'
             type='text'
             placeholder='Título do projeto'
-            className='py-2 px-5 rounded-xl'
+            className='py-2 px-5 rounded-md bg-zinc-950 border-[1px] border-zinc-400/50'
             value={currentProject.title}
             onChange={(e) => setCurrentProject({ ...currentProject, title: e.target.value })}
           />
@@ -145,7 +146,7 @@ export default function MyProjects() {
             cols='23'
             rows='8'
             placeholder='Descrição'
-            className='py-1 px-5 rounded-xl'
+            className='p-4 h-[300px] rounded-md bg-zinc-950 border-[1px] resize-none overflow-y-auto border-zinc-400/50'
             value={currentProject.description}
             onChange={(e) => setCurrentProject({ ...currentProject, description: e.target.value })}
           />
@@ -159,8 +160,9 @@ export default function MyProjects() {
           )}
           {errorMessage && <div className='text-[#ef4444] text-sm'>{errorMessage}</div>}
         </form>
+        </div>
       </div>
-      <div className='text-white flex justify-center w-full mr-20'>
+      <div className='text-white flex justify-center w-10/12 mr-20'>
         {isLoading ? (
           <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-zinc-700 bg-opacity-70 backdrop-filter backdrop-blur-sm z-50 text-3xl">
             Buscando projetos...
@@ -168,7 +170,7 @@ export default function MyProjects() {
         ) : (
           <div>
             {(projects.length > 0) ? (
-              <div className='text-black flex flex-wrap justify-center gap-10'>
+              <div className='text-black flex flex-wrap gap-10 items-start'>
                 {projects.map(item => (
                   <div key={item._id} className='flex flex-col bg-white p-6 rounded-md w-[400px] text-justify'>
                     <div className='flex relative'>
@@ -198,6 +200,6 @@ export default function MyProjects() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }
