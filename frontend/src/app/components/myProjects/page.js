@@ -5,8 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { MdDelete } from "react-icons/md";
 import { useRouter } from 'next/navigation';
 
-// const URL = 'https://trilhafullstack.onrender.com'
-const URL = 'http://localhost:3334'
+const URL = 'https://trilhafullstack.onrender.com'
+// const URL = 'http://localhost:3334'
 
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);

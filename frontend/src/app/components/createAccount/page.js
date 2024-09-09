@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import {FaUser, FaLock, FaAt} from "react-icons/fa";
 
-// const URL = 'https://trilhafullstack.onrender.com';
-const URL = 'http://localhost:3334';
+const URL = 'https://trilhafullstack.onrender.com';
+// const URL = 'http://localhost:3334';
 
 export default function CreateAccount() {
   const [user, setUser] = useState('');
@@ -25,13 +25,14 @@ export default function CreateAccount() {
       })
 
       setErrorMessage("Conta criada com sucesso!")
-      
+
       setTimeout(() => {
         setErrorMessage('')
       }, 5000);
 
     } catch (error) {
       setErrorMessage(error.response.data.message)
+
       setTimeout(() => {
         setErrorMessage('')
       }, 5000);

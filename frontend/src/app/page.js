@@ -7,8 +7,8 @@ import {FiLoader} from "react-icons/fi"
 import { useState } from "react";
 import axios from 'axios';
 
-// const URL = 'https://trilhafullstack.onrender.com'
-const URL = 'http://localhost:3334'
+const URL = 'https://trilhafullstack.onrender.com'
+// const URL = 'http://localhost:3334'
 
 export default function Home() {
   const [loginData, setLoginData] = useState({
@@ -39,7 +39,7 @@ export default function Home() {
     } catch (error) {  
       setIsLoading(false);
       setErrorMessage(error.response.data.message);
-      
+
       setTimeout(() => {
         setErrorMessage('')
       }, 5000);
