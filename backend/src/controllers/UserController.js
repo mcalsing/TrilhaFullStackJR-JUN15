@@ -26,7 +26,7 @@ module.exports = {
   async delete(req, res) {
     const { id } = req.params;
     if (id.length !== 24) {
-      return res.status(401).json({ error: "ID deve ter 24 characters"})
+      return res.status(401).json({ message: "ID deve ter 24 characters"})
     }
 
     const deleteUser = await User.findByIdAndDelete(id);
@@ -35,7 +35,7 @@ module.exports = {
       return res.json(deleteUser);
     }
 
-    return res.status(404).json({ error: "Registro não encontrado!" });
+    return res.status(404).json({ message: "Registro não encontrado!" });
   },
 
   async login(req, res) {
@@ -44,7 +44,7 @@ module.exports = {
     const user = await User.findOne({ email: email });
 
     if (user?.email !== email || !bcrypt.compareSync(password, user?.password)) {
-      return res.status(401).json({error: 'E-mail ou senha estão incorretos!'})
+      return res.status(401).json({message: '"email" or "password" are incorrect!'})
     }
 
     const token = createToken(email);
@@ -60,7 +60,7 @@ module.exports = {
     return res.json({ user })
 
     } catch (error) {
-      return res.status(401).json({error: "Algo deu errado"})
+      return res.status(401).json({message: "Algo deu errado"})
     }
   }
 };

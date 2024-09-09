@@ -8,7 +8,7 @@ import { useState } from "react";
 import axios from 'axios';
 
 const URL = 'https://trilhafullstack.onrender.com'
-// const URL = 'http://localhost:3334'
+//const URL = 'http://localhost:3334'
 
 export default function Home() {
   const [loginData, setLoginData] = useState({
@@ -22,12 +22,14 @@ export default function Home() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     setIsLoading(true);
 
     try {
       setIsLoading(false);
 
       const response = await axios.post(`${URL}/login`, { email: loginData.email, password: loginData.password });
+      
       const dataToStorage = response.data;
   
       const dataToStorageJSON = JSON.stringify(dataToStorage);
@@ -38,6 +40,7 @@ export default function Home() {
       }
     } catch (error) {  
       setIsLoading(false);
+      //console.log(error.response.data)
       setErrorMessage(error.response.data.message);
 
       setTimeout(() => {
@@ -88,7 +91,7 @@ export default function Home() {
               >
                 {
                   isLoading  && (
-                  <FiLoader className="text-white animate-spin ml-24 top-2 absolute" />
+                  <p><FiLoader className="text-white animate-spin ml-24 top-2 absolute" /></p>
                   )
                 }
                 <span>Entrar</span>
