@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 const URL = 'https://trilhafullstack.onrender.com'
-// const URL = 'http://localhost:3334/user';
+// const URL = 'http://localhost:3334';
 
 export default function Profile() {
   const [firstName, setFirstName] = useState('');
@@ -17,7 +17,7 @@ export default function Profile() {
       const dataFromLocalStorageJSON = JSON.parse(dataFromLocalStorageString);
       const token = dataFromLocalStorageJSON.token;
 
-      const { data } = await axios.get(`${URL}/${dataFromLocalStorageJSON.id}`, {
+      const { data } = await axios.get(`${URL}/user/${dataFromLocalStorageJSON.id}`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
