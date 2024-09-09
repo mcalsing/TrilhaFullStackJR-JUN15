@@ -6,8 +6,8 @@ const routes = require('./routes');
 const conn = require('./database/dbConfig');
 conn();
 
-const URL = 'https://trilha-full-stack.vercel.app';
-// const URL = 'http://localhost:3000'
+// const URL = 'https://trilha-full-stack.vercel.app';
+const URL = 'http://localhost:3000'
 
 const app = express();
 app.use(express.json());

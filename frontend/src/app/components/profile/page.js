@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-const URL = 'https://trilhafullstack.onrender.com'
-// const URL = 'http://localhost:3334/user';
+// const URL = 'https://trilhafullstack.onrender.com'
+const URL = 'http://localhost:3334/user';
 
 export default function Profile() {
   const [profileData, setProfileData] = useState({

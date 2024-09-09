@@ -7,8 +7,8 @@ import {FiLoader} from "react-icons/fi"
 import { useState } from "react";
 import axios from 'axios';
 
-const URL = 'https://trilhafullstack.onrender.com'
-// const URL = 'http://localhost:3334'
+// const URL = 'https://trilhafullstack.onrender.com'
+const URL = 'http://localhost:3334'
 
 export default function Home() {
   const [loginData, setLoginData] = useState({
@@ -25,11 +25,8 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      if(!loginData.email || !loginData.password) {
-        setIsLoading(false);
-        setErrorMessage('Preencha todos os campos');
-        return
-      }
+      setIsLoading(false);
+
       const response = await axios.post(`${URL}/login`, { email: loginData.email, password: loginData.password });
       const dataToStorage = response.data;
   
@@ -39,9 +36,13 @@ export default function Home() {
       if(response.status === 200) {
         router.push("/components/myProjects");            
       }
-    } catch (error) {    
+    } catch (error) {  
       setIsLoading(false);
-      setErrorMessage(error.response.data.message);    
+      setErrorMessage(error.response.data.message);
+      
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000);
     }
 
   };

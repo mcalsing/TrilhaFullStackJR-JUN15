@@ -5,8 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { MdDelete } from "react-icons/md";
 import { useRouter } from 'next/navigation';
 
-const URL = 'https://trilhafullstack.onrender.com'
-// const URL2 = 'http://localhost:3334'
+// const URL = 'https://trilhafullstack.onrender.com'
+const URL = 'http://localhost:3334'
 
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);
@@ -79,14 +79,17 @@ export default function MyProjects() {
       copyOfProjects[index] = response.data;
   
       setProjects(copyOfProjects);
+
       setCurrentProject({
         title: '',
         description: ''
       });
+
       setIsEditing(false);
 
     } catch (error) {
       setErrorMessage(error.response.data.message);
+
       setTimeout(() => {
         setErrorMessage('')
       }, 5000);
@@ -96,6 +99,7 @@ export default function MyProjects() {
   const cancelUpdate = (event) => {
     event.preventDefault();
     setIsEditing(false);
+
     setCurrentProject({
       title: '',
       description: ''
@@ -109,6 +113,7 @@ export default function MyProjects() {
     try {
       const response = await axios.post(`${URL}/api/projects`, { createdByUserId, title, description });
       setProjects([...projects, response.data]);
+
       setCurrentProject({
         title: '',
         description: ''
@@ -116,6 +121,7 @@ export default function MyProjects() {
       
     } catch (error) {
       setErrorMessage(error.response.data.message);
+
       setTimeout(() => {
         setErrorMessage('')
       }, 5000);
@@ -124,9 +130,9 @@ export default function MyProjects() {
 
   return (
     <div className='flex w-full justify-center h-screen gap-10 m-auto'>
-      <div className='w-3/12 px-4'>
+      <div className='w-[460px] px-4'>
       <div className="p-5 border-[1px] border-[#ef4444] rounded-md">
-        <form className='w-full flex flex-col justify-between gap-4'>
+        <form className='w-full flex flex-col justify-between gap-4 text-white'>
           {isEditing ? (
             <h1 className='text-2xl text-white'>Editar Projeto</h1>
           ) : (
@@ -162,7 +168,7 @@ export default function MyProjects() {
         </form>
         </div>
       </div>
-      <div className='text-white flex justify-center w-10/12 mr-20'>
+      <div className='text-white flex justify-center w-8/12 mr-10'>
         {isLoading ? (
           <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-zinc-700 bg-opacity-70 backdrop-filter backdrop-blur-sm z-50 text-3xl">
             Buscando projetos...
@@ -170,9 +176,9 @@ export default function MyProjects() {
         ) : (
           <div>
             {(projects.length > 0) ? (
-              <div className='text-black flex flex-wrap gap-10 items-start'>
+              <div className='text-black flex flex-wrap gap-10 justify-center items-start'>
                 {projects.map(item => (
-                  <div key={item._id} className='flex flex-col bg-white p-6 rounded-md w-[400px] text-justify'>
+                  <div key={item._id} className='flex flex-col bg-white p-4 rounded-md w-[380px] text-justify'>
                     <div className='flex relative'>
                       <h2 className='font-bold mb-2'>Título: {item.title}</h2>
                       <MdDelete 
