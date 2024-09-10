@@ -4,9 +4,10 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { MdDelete } from "react-icons/md";
 import { useRouter } from 'next/navigation';
+import {FiLoader} from "react-icons/fi"
 
 const URL = 'https://trilhafullstack.onrender.com'
-// const URL = 'http://localhost:3334'
+//const URL = 'http://localhost:3334'
 
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);
@@ -15,6 +16,7 @@ export default function MyProjects() {
   const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [createdByUserId, setCreatedByUserId] = useState(null);
+  const [buttonIsLoading, setButtonIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -69,6 +71,8 @@ export default function MyProjects() {
 
   const sendUpdate = async (event) => {
     event.preventDefault();
+    setButtonIsLoading(true);
+    
     const { id, title, description } = currentProject;
     
     try {
@@ -93,6 +97,9 @@ export default function MyProjects() {
       setTimeout(() => {
         setErrorMessage('')
       }, 5000);
+
+    } finally {
+      setButtonIsLoading(false);
     }
   };
 
@@ -108,6 +115,8 @@ export default function MyProjects() {
 
   const createProject = async (event) => {
     event.preventDefault();
+
+    setButtonIsLoading(true);
     const { title, description } = currentProject;
 
     try {
@@ -125,6 +134,9 @@ export default function MyProjects() {
       setTimeout(() => {
         setErrorMessage('')
       }, 5000);
+
+    } finally {
+      setButtonIsLoading(false);
     }
   };
 
@@ -156,15 +168,37 @@ export default function MyProjects() {
             value={currentProject.description}
             onChange={(e) => setCurrentProject({ ...currentProject, description: e.target.value })}
           />
-          {isEditing ? (
-            <div className='grid grid-flow-col justify-stretch gap-5 w-full h-10 mt-4'>
-              <button className='bg-[#ef4444] rounded-md px-16' onClick={sendUpdate}>Editar</button>
-              <button className='bg-[#ef4444] rounded-md' onClick={cancelUpdate}>Cancelar</button>
-            </div>
-          ) : (
-            <button className='bg-[#ef4444] w-full py-2 mt-4 rounded-md text-white' onClick={createProject}>Cadastrar</button>
-          )}
-          {errorMessage && <div className='text-[#ef4444] text-sm'>{errorMessage}</div>}
+          <div className='relative'>          
+            {isEditing ? (
+              <div className='grid grid-flow-col justify-stretch gap-5 w-full h-10 mt-4 relative'>
+                <button 
+                className='bg-[#ef4444] rounded-md px-16'
+                onClick={sendUpdate}
+              >
+                {
+                  buttonIsLoading && (
+                  <p><FiLoader className="text-white animate-spin -ml-2 top-3 absolute" /></p>
+                  )
+                }
+                <span>Editar</span>
+              </button>
+                <button className='bg-[#ef4444] rounded-md' onClick={cancelUpdate}>Cancelar</button>
+              </div>
+            ) : (
+              <button 
+                className='bg-[#ef4444] w-full py-2 mt-4 rounded-md text-white' 
+                onClick={createProject}
+                >
+                  {
+                    buttonIsLoading && (
+                    <p><FiLoader className="text-white animate-spin ml-24 top-7 absolute" /></p>
+                    )
+                  }
+                  <span>Cadastrar</span>
+                </button>
+            )}
+            {errorMessage && <div className='text-[#ef4444] text-sm'>{errorMessage}</div>}
+          </div>
         </form>
         </div>
       </div>

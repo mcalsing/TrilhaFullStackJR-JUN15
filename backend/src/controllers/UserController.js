@@ -44,7 +44,7 @@ module.exports = {
     const user = await User.findOne({ email: email });
 
     if (user?.email !== email || !bcrypt.compareSync(password, user?.password)) {
-      return res.status(401).json({message: '"email" or "password" are incorrect!'})
+      return res.status(401).json({message: '"email" or "password" are incorrect'})
     }
 
     const token = createToken(email);

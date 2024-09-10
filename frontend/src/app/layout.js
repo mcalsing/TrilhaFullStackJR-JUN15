@@ -27,8 +27,8 @@ export default function RootLayout({ children }) {
               </div>
             </nav>
           </header>
-          <footer className="absolute bottom-0 bg-white text-white w-full py-2">
-            <span className="block text-xs text-red-500 sm:text-center">© 2024 <a href="https://www.linkedin.com/in/marcelocalsing/" target="_blank">Marcelo Calsing</a>. All Rights Reserved.</span>
+          <footer className="absolute bottom-0 bg-[#ef4444] text-white w-full py-2">
+            <span className="block text-xs sm:text-center">© 2024 <a href="https://www.linkedin.com/in/marcelocalsing/" target="_blank">Marcelo Calsing</a>. All Rights Reserved.</span>
           </footer>
         {children}</body>
     </html>

@@ -15,7 +15,7 @@ export default function Home() {
     email: '',
     password: '',
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [buttonIsLoading, setButtonIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
 
   const router = useRouter();
@@ -23,12 +23,12 @@ export default function Home() {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    setIsLoading(true);
+    setButtonIsLoading(true);
 
     try {
-      setIsLoading(false);
 
       const response = await axios.post(`${URL}/login`, { email: loginData.email, password: loginData.password });
+      //setButtonIsLoading(false);
       
       const dataToStorage = response.data;
   
@@ -39,13 +39,16 @@ export default function Home() {
         router.push("/components/myProjects");            
       }
     } catch (error) {  
-      setIsLoading(false);
+      // setButtonIsLoading(false);
       //console.log(error.response.data)
       setErrorMessage(error.response.data.message);
 
       setTimeout(() => {
         setErrorMessage('')
       }, 5000);
+      
+    } finally {
+      setButtonIsLoading(false);
     }
 
   };
@@ -80,7 +83,7 @@ export default function Home() {
               />
               <FaLock className="absolute right-1 top-3 w-3"/>
             </div>
-            <div className="text-white relative">
+            <div className="text-white relative line-through">
               <a className="absolute right-0 text-base" href="#">Esqueceu a senha?</a>
             </div> 
             <div className="mt-11 flex flex-col items-center">
@@ -90,7 +93,7 @@ export default function Home() {
                 onClick={handleLogin}
               >
                 {
-                  isLoading  && (
+                  buttonIsLoading && (
                   <p><FiLoader className="text-white animate-spin ml-24 top-2 absolute" /></p>
                   )
                 }
