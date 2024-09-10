@@ -26,8 +26,8 @@ export default function Profile() {
       setFirstName(data.user.firstName);
 
     } catch (error) {
-      console.error(error.response.data.error);
       router.push('/');
+      console.error(error.response.data.error);
     }
   };
   

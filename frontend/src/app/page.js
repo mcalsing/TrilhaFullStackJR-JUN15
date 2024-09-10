@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import {FaAt, FaLock} from "react-icons/fa"
 import {FiLoader} from "react-icons/fi"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 
 const URL = 'https://trilhafullstack.onrender.com'
@@ -50,8 +50,11 @@ export default function Home() {
     } finally {
       setButtonIsLoading(false);
     }
-
   };
+
+  useEffect(() => {
+    handleLogin();
+  }, []);
 
   return (
     <main className="flex flex-col">

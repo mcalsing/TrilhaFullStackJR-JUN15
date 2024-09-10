@@ -1,5 +1,8 @@
 ![Código Certo Coders](https://utfs.io/f/3b2340e8-5523-4aca-a549-0688fd07450e-j4edu.jfif)
 
+# Instruções de instalação/configuração
+
+
 # 📚 Trilha Inicial FullStack Jr
 Este projeto tem como objetivo desenvolver uma aplicação web completa para gerenciamento de projetos, juntamente com um servidor back-end. A aplicação web permitirá aos usuários listar, cadastrar, editar e excluir projetos, cada um contendo um título e uma descrição.
 
