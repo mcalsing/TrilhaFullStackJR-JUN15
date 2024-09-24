@@ -8,10 +8,10 @@ const validateProject = require('./middlewares/validateProject');
 const validateToken = require('./middlewares/validateToken');
 const validateLogin = require('./middlewares/validateLogin')
 
-routes.get('/api/projects', ProjectController.getAll);
-routes.post('/api/projects',validateProject, ProjectController.create);
-routes.put('/api/projects/:id',validateProject, ProjectController.update);
-routes.delete('/api/projects/:id', ProjectController.delete);
+routes.get('/projects', ProjectController.getAll);
+routes.post('/projects',validateProject, ProjectController.create);
+routes.put('/projects/:id',validateProject, ProjectController.update);
+routes.delete('/projects/:id', ProjectController.delete);
 
 
 routes.post('/login', validateLogin, UserController.login);

@@ -1,10 +1,38 @@
 ![Código Certo Coders](https://utfs.io/f/3b2340e8-5523-4aca-a549-0688fd07450e-j4edu.jfif)
 
-# Instruções de instalação/configuração
+# 📚 Objetivo da aplicação
+Este projeto tem como objetivo desenvolver uma aplicação web completa para gerenciamento de projetos, juntamente com um servidor back-end, afim de testar os conhecimentos para integrar a equipe de voluntário da Código Certo. A aplicação web permitirá aos usuários listar, cadastrar, editar e excluir projetos, cada um contendo um título e uma descrição.
 
+## Gestão de Projetos
+Permite criar, consultar, atualizar e excluir projetos (CRUD).
+- Endpoints:
+  - POST: `trilhafullstack.onrender.com/projects`
+  - GET: `trilhafullstack.onrender.com/projects`
+  - PUT: `trilhafullstack.onrender.com/projects/id`
+  - DELETE: `trilhafullstack.onrender.com/projects/id`
+- OBS: Ao utilizar algum endpoints pode haver delay no retorno da requisição (~ um minuto), pois o servidor backend fica inativo após 15 minutos sem utilização.
 
-# 📚 Trilha Inicial FullStack Jr
-Este projeto tem como objetivo desenvolver uma aplicação web completa para gerenciamento de projetos, juntamente com um servidor back-end. A aplicação web permitirá aos usuários listar, cadastrar, editar e excluir projetos, cada um contendo um título e uma descrição.
+## Gestão de Usuários
+Permite criar, consultar e autorizar (retorna um token JWT) usuários.
+  - Endpoints:
+    - POST: `trilhafullstack.onrender.com/user`
+    - GET: `trilhafullstack.onrender.com/user`
+    - POST: `trilhafullstack.onrender.com/login`
+  - OBS: Ao utilizar algum endpoints pode haver delay no retorno da requisição (~ um minuto), pois o servidor backend fica inativo após 15 minutos sem utilização.
+
+## Linguagens e Ferramentas Utilizadas
+
+- **Node.js**: Para o desenvolvimento do Backend com Express.
+- **Jsonwebtoken (JWT)**: Para autorização de acesso.
+- **Bcrypt**: Para criptografar a senha dos usuários antes de salvar no banco de dados.
+- **MongoDB/Mangoose**: Banco de dados e ORM.
+- **React**: Para o desenvolvimento do Frontend.
+- **Next.js**: Ferramenta de build para desenvolvimento Frontend.
+- **TailwindCSS**: Para estilização e estruturação do Frontend.
+- **Vercel**: Para o deploy do Frontend.
+- **Render**: Para o deploy do Backend.
+
+# Requisitos para o desenvolvimento do projeto (Código Certo)
 
 ## FrontEnd:
 - **HTML/CSS/JavaScript puro:** Utilize HTML para estruturar a página, CSS para estilização e JavaScript puro (ou jQuery, se preferir) para manipulação de DOM e interações com o servidor.

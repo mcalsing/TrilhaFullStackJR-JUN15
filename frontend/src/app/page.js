@@ -26,10 +26,7 @@ export default function Home() {
     setButtonIsLoading(true);
 
     try {
-
       const response = await axios.post(`${URL}/login`, { email: loginData.email, password: loginData.password });
-      //setButtonIsLoading(false);
-      
       const dataToStorage = response.data;
   
       const dataToStorageJSON = JSON.stringify(dataToStorage);
@@ -39,8 +36,6 @@ export default function Home() {
         router.push("/components/myProjects");            
       }
     } catch (error) {  
-      // setButtonIsLoading(false);
-      //console.log(error.response.data)
       setErrorMessage(error.response.data.message);
 
       setTimeout(() => {
